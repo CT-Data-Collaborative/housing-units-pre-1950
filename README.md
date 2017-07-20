@@ -2,7 +2,7 @@ Housing Units Built Before 1950
 
 [![Build Status](https://travis-ci.org/CT-Data-Collaborative/housing-units-pre-1950.svg?branch=master)](https://travis-ci.org/CT-Data-Collaborative/housing-units-pre-1950)
 
-Housing Units Built Before 1950 reports the number of housing units built before 1950 in each location.
+Housing Units Built Before 1950 reports the number of housing units built before 1950 in each location. 
 
 Data Source: <https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_15_5YR_B25034&prodType=table>
 
