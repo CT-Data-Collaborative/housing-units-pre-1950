@@ -1,6 +1,5 @@
 library(dplyr)
 
-
 ##################################################################
 #
 # Processing Script for Housing Units Built Before 1950
@@ -80,6 +79,7 @@ housing_df_long$Variable <- gsub("Percent ", "", housing_df_long$Variable)
 housing_df_long$`Town Profile Year` <- NA
 housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2013)] <- 2016
 housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2015)] <- 2017
+housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2016)] <- 2018
 
 #Sort and select columns
 housing_df_long <- housing_df_long %>% 
@@ -89,7 +89,7 @@ housing_df_long <- housing_df_long %>%
 # Write to File
 write.table(
   housing_df_long,
-  file.path(getwd(), "data", "housing_units_built_before_1950-2017.csv"),
+  file.path(getwd(), "data", "housing_units_built_before_1950-2018.csv"),
   sep = ",",
   row.names = F
 )

@@ -21,7 +21,7 @@
   }],
   "contributor": [],
   "resources": [{
-    "path": "data/housing_units_built_before_1950-2017.csv",
+    "path": "data/housing_units_built_before_1950-2018.csv",
     "format": "csv",
     "schema": {
       "fields": [{
@@ -68,7 +68,7 @@
       }
     }
   ],
-  "last_modified": "07/18/2017",
+  "last_modified": "03/09/2018",
   "ckan_extras": {
     "full_description": {
       "ckan_name": "Full Description",
@@ -105,6 +105,16 @@
       "value": "",
       "type": "string"
     },
+    "numerator": {
+      "ckan_name": "Numerator",
+      "value": "Total housing units built before 1950.",
+      "type": "string"
+    },
+    "denominator": {
+      "ckan_name": "Denominator",
+      "value": "Total housing units.",
+      "type": "string"
+    },
     "geography": {
       "ckan_name": "Geography",
       "value": "Town/County",
@@ -118,12 +128,12 @@
     },
     "years_in_catalog": {
       "ckan_name": "Years in Catalog",
-      "value": ["2013", "2015"],
+      "value": ["2013", "2015", "2016"],
       "type": "array"
     },
     "latest_year": {
       "ckan_name": "Latest Year Available",
-      "value": "2015",
+      "value": "2016",
       "type": "string"
     },
     "disabled_views": {
@@ -149,7 +159,7 @@
       "value": {
         "Town/County": "Connecticut",
         "Measure Type": "Percent",
-        "Year": ["2015"],
+        "Year": ["2016"],
         "Variable": ["Housing Units Built Before 1950"]
       },
       "type": "object"
@@ -183,12 +193,45 @@
         "number type": "float",
         "value": 29.0
       }
+    }, 
+    {
+      "type": "$lookup",
+      "filter": {
+        "Town/County": "Andover",
+        "Year": "2013",
+        "Variable": "Housing Units Built Before 1950",
+        "Measure Type": "Number"
+      },
+      "expected": {
+        "type": "$match",
+        "number type": "int",
+        "value": 317
+      }
+    }, 
+    {
+      "type": "$lookup",
+      "filter": {
+        "Town/County": "New Haven County",
+        "Year": "2016",
+        "Variable": "Housing Units Built Before 1950",
+        "Measure Type": "Percent"
+      },
+      "expected": {
+        "type": "$match",
+        "number type": "float",
+        "value": 33.3
+      }
     }
   ],
   "dimension_groups": [
-    {"Variable": ["Total Housing Units", 
-                  "Housing Units Built Before 1950", 
-                  "Housing Units Built Before 1950"]
+    {
+      "Measure Type": ["Number"],
+      "Variable": ["Total Housing Units", 
+                   "Housing Units Built Before 1950"]
+    }, 
+    {
+      "Measure Type": ["Percent"],
+      "Variable": ["Housing Units Built Before 1950"]
     }
   ]
 }
