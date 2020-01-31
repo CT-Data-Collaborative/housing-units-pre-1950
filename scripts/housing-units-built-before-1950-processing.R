@@ -16,7 +16,7 @@ data_location <- grep("data$", sub_folders, value=T)
 path_to_data <- (paste0(getwd(), "/", data_location))
 
 housing_files <- dir(path_to_raw_data, recursive=T, pattern = "with_ann")
-keep_cols <- c("Id2", "Geography", "Estimate!!Total", "Estimate!!Total!!Built 1940 to 1949", "Estimate!!Total!!Built 1939 or earlier")
+keep_cols <- c("Id2", "Geography", "^Estimate!!Total$", "^Estimate!!Total!!Built 1940 to 1949$", "^Estimate!!Total!!Built 1939 or earlier$")
 
 housing_df <- data.frame(stringsAsFactors = F)
 for (i in 1:length(housing_files)) {
@@ -24,11 +24,13 @@ for (i in 1:length(housing_files)) {
   colnames(current_file) = current_file[1, ] 
   current_file = current_file[-1, ]
   current_file <- current_file[,which(grepl(paste(keep_cols, collapse="|"), names(current_file)))]
-  get_year <- as.numeric(substr(unique(unlist(gsub("[^0-9]", "", unlist(housing_files[i])), "")), 1, 2))
-  get_year <- get_year + 2000
-  current_file$Year <- get_year
+  
+  current_file$Year <- as.numeric(substr(unique(unlist(gsub("[^0-9]", "", unlist(housing_files[i])), "")), 1, 2)) + 2000
+
   housing_df <- rbind(housing_df, current_file)
 }
+
+housing_df
 
 #cleanup geog names
 housing_df$Geography <- sub(" town.*", "", housing_df$Geography)
@@ -77,7 +79,8 @@ housing_df_long$Variable <- gsub("Percent ", "", housing_df_long$Variable)
 
 #Assign town profile year
 housing_df_long$`Town Profile Year` <- NA
-housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2013)] <- 2016
+housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2013)] <- 2015
+housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2014)] <- 2016
 housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2015)] <- 2017
 housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2016)] <- 2018
 housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2017)] <- 2019
