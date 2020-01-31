@@ -15,13 +15,13 @@
     "web": ""
   }],
   "author":[{
-    "name": "Connecticut Data Collaborative",
+    "name": "CTData Collaborative",
     "email": "info@ctdata.org",
     "web": "http://ctdata.org"
   }],
   "contributor": [],
   "resources": [{
-    "path": "data/housing_units_built_before_1950-2019.csv",
+    "path": "data/housing_units_built_before_1950-2020.csv",
     "format": "csv",
     "schema": {
       "fields": [{
@@ -68,7 +68,7 @@
       }
     }
   ],
-  "last_modified": "05/21/2019",
+  "last_modified": "01/31/2020",
   "ckan_extras": {
     "full_description": {
       "ckan_name": "Full Description",
@@ -128,12 +128,12 @@
     },
     "years_in_catalog": {
       "ckan_name": "Years in Catalog",
-      "value": ["2013", "2015", "2016", "2017"],
+      "value": ["2013", "2014", "2015", "2016", "2017", "2018"],
       "type": "array"
     },
     "latest_year": {
       "ckan_name": "Latest Year Available",
-      "value": "2017",
+      "value": "2018",
       "type": "string"
     },
     "disabled_views": {
@@ -159,7 +159,7 @@
       "value": {
         "Town/County": "Connecticut",
         "Measure Type": "Percent",
-        "Year": ["2016"],
+        "Year": ["2018"],
         "Variable": ["Housing Units Built Before 1950"]
       },
       "type": "object"

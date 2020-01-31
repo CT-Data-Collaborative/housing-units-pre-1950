@@ -16,7 +16,7 @@ data_location <- grep("data$", sub_folders, value=T)
 path_to_data <- (paste0(getwd(), "/", data_location))
 
 housing_files <- dir(path_to_raw_data, recursive=T, pattern = "with_ann")
-keep_cols <- c("Id2", "Geography", "Estimate; Total:$", "^Estimate; Total: - Built 1940", "^Estimate; Total: - Built 1939")
+keep_cols <- c("Id2", "Geography", "Estimate!!Total", "Estimate!!Total!!Built 1940 to 1949", "Estimate!!Total!!Built 1939 or earlier")
 
 housing_df <- data.frame(stringsAsFactors = F)
 for (i in 1:length(housing_files)) {
@@ -39,14 +39,14 @@ housing_df <- housing_df[!grepl("defined", housing_df$Geography),]
 
 #Calculate units built before 1950
 housing_df$`Housing Units Built Before 1950` <- NA
-housing_df$`Estimate; Total: - Built 1940 to 1949` <- as.numeric(housing_df$`Estimate; Total: - Built 1940 to 1949`) 
-housing_df$`Estimate; Total: - Built 1939 or earlier` <- as.numeric(housing_df$`Estimate; Total: - Built 1939 or earlier`)
-housing_df$`Estimate; Total:` <- as.numeric(housing_df$`Estimate; Total:`)
-housing_df$`Housing Units Built Before 1950` <- (housing_df$`Estimate; Total: - Built 1940 to 1949` + housing_df$`Estimate; Total: - Built 1939 or earlier`)
+housing_df$`Estimate!!Total!!Built 1940 to 1949` <- as.numeric(housing_df$`Estimate!!Total!!Built 1940 to 1949`) 
+housing_df$`Estimate!!Total!!Built 1939 or earlier` <- as.numeric(housing_df$`Estimate!!Total!!Built 1939 or earlier`)
+housing_df$`Estimate!!Total` <- as.numeric(housing_df$`Estimate!!Total`)
+housing_df$`Housing Units Built Before 1950` <- (housing_df$`Estimate!!Total!!Built 1940 to 1949` + housing_df$`Estimate!!Total!!Built 1939 or earlier`)
 
 housing_df <- housing_df %>% 
-  select(Id2, Year, Geography, `Estimate; Total:`, `Housing Units Built Before 1950`) %>% 
-  rename(FIPS = Id2, `Town/County` = Geography, `Total Housing Units` = `Estimate; Total:`) %>% 
+  select(Id2, Year, Geography, `Estimate!!Total`, `Housing Units Built Before 1950`) %>% 
+  rename(FIPS = Id2, `Town/County` = Geography, `Total Housing Units` = `Estimate!!Total`) %>% 
   arrange(`Town/County`, Year) %>% 
   mutate(`Percent Housing Units Built Before 1950` = round(((`Housing Units Built Before 1950` / `Total Housing Units`)*100), 1))
 
@@ -80,6 +80,8 @@ housing_df_long$`Town Profile Year` <- NA
 housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2013)] <- 2016
 housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2015)] <- 2017
 housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2016)] <- 2018
+housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2017)] <- 2019
+housing_df_long$`Town Profile Year`[which(housing_df_long$Year == 2018)] <- 2020
 
 #Sort and select columns
 housing_df_long <- housing_df_long %>% 
@@ -89,7 +91,7 @@ housing_df_long <- housing_df_long %>%
 # Write to File
 write.table(
   housing_df_long,
-  file.path(getwd(), "data", "housing_units_built_before_1950-2018.csv"),
+  file.path(getwd(), "data", "housing_units_built_before_1950-2020.csv"),
   sep = ",",
   row.names = F
 )
